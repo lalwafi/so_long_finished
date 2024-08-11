@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:50:53 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 10:06:20 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/11 10:23:54 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	parse_that_map(char *map_path, t_game *game)
 	get_that_map(map_path, &game->map);
 	check_them_borders(&game->map);
 	check_elements(&game->map, 0, 0);
-	check_EPC(&game->map);
+	check_epc(&game->map);
 	pathfinder_time(&game->map, game->map->player_x,
 		game->map->player_y, game->map->map_copy);
 	if (game->map->temp_collectibles != 0 || game->map->temp_exit != 0)
