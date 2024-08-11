@@ -1,6 +1,6 @@
 NAME    = so_long
 CC      = cc
-CFLAGS  = -Wall -Werror -Wextra -g3 -fsanitize=address,undefined
+CFLAGS  = -Wall -Werror -Wextra -fsanitize=address -g3
 
 SRCS    = $(addprefix mandatory/, so_long.c parsing1.c parsing2.c \
 			parsing3.c rendering.c game_stuff.c \
@@ -29,9 +29,7 @@ $(MLX):
 	make -C MLX
 
 $(NAME): $(OBJ) $(LIBFT) $(PRINTF) $(MLX) 
-	@echo objs:${OBJ}
 	$(CC) $(CFLAGS) $(OBJ) $(MLXFLAG) -o $@ $(LIBFT) $(PRINTF) $(MLX)
-# $(CC) $(CFLAGS) $(OBJ) -o $@ $(LIBFT) $(PRINTF)
 
 clean: 
 	rm -f $(OBJ)
@@ -39,7 +37,7 @@ clean:
 	make -C ft_printf_copy clean
 
 fclean: clean
-	@make -C MLX clean
+	make -C MLX clean
 	make -C libft_copy fclean
 	make -C ft_printf_copy fclean
 	rm -f $(NAME)

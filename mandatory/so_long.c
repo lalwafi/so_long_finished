@@ -6,14 +6,30 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:50:53 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 10:23:54 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:06:55 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	exit_nicely(char *message, int exitnum)
+void	exit_nicely(char *message, int exitnum, t_parsemap **map)
 {
+	int	i;
+
+	i = -1;
+	if ((*map)->map_copy != NULL)
+	{
+		while ((*map)->map_copy[++i])
+			free((*map)->map_copy[i]);
+		free((*map)->map_copy);
+	}
+	i = -1;
+	if ((*map)->map_main != NULL)
+	{
+		while ((*map)->map_main[++i])
+			free((*map)->map_main[i]);
+		free((*map)->map_main);
+	}
 	if (message)
 		ft_printf("%s", message);
 	if (exitnum == 0)
@@ -34,16 +50,15 @@ void	parse_that_map(char *map_path, t_game *game)
 	count_y(map_path, &game->map);
 	count_x(map_path, &game->map, 0);
 	get_that_map(map_path, &game->map);
+	if (game->map->x_count > 40 || game->map->y_count > 22)
+		exit_nicely("map is too big!! pls fix thanks", 1, &game->map);
 	check_them_borders(&game->map);
 	check_elements(&game->map, 0, 0);
 	check_epc(&game->map);
 	pathfinder_time(&game->map, game->map->player_x,
 		game->map->player_y, game->map->map_copy);
 	if (game->map->temp_collectibles != 0 || game->map->temp_exit != 0)
-		(free(game->map), exit_nicely("can't collect all C and exit", 1));
-	while (game->map->map_copy[++i])
-		free(game->map->map_copy[i]);
-	free(game->map->map_copy);
+		exit_nicely("can't collect all C and exit", 1, &game->map);
 }
 
 void	initialize_that_map(t_parsemap **map)
@@ -62,6 +77,8 @@ void	initialize_that_map(t_parsemap **map)
 	(*map)->empty_line = 0;
 	(*map)->temp_collectibles = -1;
 	(*map)->temp_exit = -1;
+	(*map)->map_copy = NULL;
+	(*map)->map_main = NULL;
 }
 
 int	main(int ac, char **av)
@@ -69,10 +86,8 @@ int	main(int ac, char **av)
 	t_game	game;
 
 	if (ac != 2)
-		(write(1, "Arguments ain't right, should be \
-		'./so_long maps/map<insert number>.ber'",
-				72),
-			exit(EXIT_FAILURE));
+		exit_nicely("Arguments ain't right, should be \
+		'./so_long maps/map<insert number>.ber'", 1, NULL);
 	do_images_exist();
 	game.map = malloc(sizeof(t_parsemap));
 	parse_that_map(av[1], &game);
@@ -80,6 +95,7 @@ int	main(int ac, char **av)
 	game.window = mlx_new_window(game.mlx, game.map->x_count * TILE_SIZE, \
 		game.map->y_count * TILE_SIZE, "so_long");
 	time_to_render(&game);
+	game.moves = 0;
 	mlx_hook(game.window, 2, 0, hanlde_them_keys, &game);
 	mlx_hook(game.window, 17, 0, game_over, &game);
 	mlx_loop(game.mlx);

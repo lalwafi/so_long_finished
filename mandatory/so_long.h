@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:51:05 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 10:04:29 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/11 14:00:09 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef enum keys
 	LEFT = 123
 }	t_keys;
 
-void	exit_nicely(char *message, int exitnum);
+void	exit_nicely(char *message, int exitnum, t_parsemap **map);
 void	do_images_exist(void);
 void	parse_that_map(char *map_path, t_game *game);
 void	initialize_that_map(t_parsemap **map);

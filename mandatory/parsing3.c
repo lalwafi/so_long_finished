@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:56:30 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 10:05:07 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/11 15:49:08 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	check_elements(t_parsemap **map, int y, int x)
 			else if ((*map)->map_copy[y][x] == PLAYER && (*map)->player != 1)
 				save_place('P', x, y, map);
 			else if ((*map)->map_copy[y][x] == PLAYER && (*map)->player == 1)
-				(free(*map), exit_nicely("more than 1 player??", 1));
+				exit_nicely("more than 1 player??", 1, map);
 			else if ((*map)->map_copy[y][x] == EXIT && (*map)->exit != 1)
 				save_place('E', x, y, map);
 			else if ((*map)->map_copy[y][x] == EXIT && (*map)->exit == 1)
-				(free(*map), exit_nicely("more than 1 exit??", 1));
+				exit_nicely("more than 1 exit??", 1, map);
 			else if ((*map)->map_copy[y][x] != WALL
 					&& (*map)->map_copy[y][x] != FLOOR)
-				(free(*map), exit_nicely("Unknown element in map bro", 1));
+				exit_nicely("Unknown element in map bro", 1, map);
 			x++;
 		}
 		x = 0;
@@ -57,11 +57,11 @@ void	save_place(char what, int x, int y, t_parsemap **map)
 void	check_epc(t_parsemap **map)
 {
 	if ((*map)->player_x == 0 || (*map)->player_y == 0 || (*map)->player == 0)
-		(free(*map), exit_nicely("wheres player??????", 1));
+		exit_nicely("wheres player??????", 1, map);
 	if ((*map)->exit_x == 0 || (*map)->exit_y == 0 || (*map)->exit == 0)
-		(free(*map), exit_nicely("wheres exit??????", 1));
+		exit_nicely("wheres exit??????", 1, map);
 	if ((*map)->collectibles == 0)
-		(free(*map), exit_nicely("wheres collectibles??????", 1));
+		exit_nicely("wheres collectibles??????", 1, map);
 }
 
 void	pathfinder_time(t_parsemap **map, int x, int y, char **map_copy)
@@ -84,3 +84,5 @@ void	pathfinder_time(t_parsemap **map, int x, int y, char **map_copy)
 	pathfinder_time(map, x, (y + 1), map_copy);
 	pathfinder_time(map, x, (y - 1), map_copy);
 }
+
+// FIX THE EXIT_NICELYS

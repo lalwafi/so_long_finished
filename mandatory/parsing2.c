@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:56:07 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 10:08:57 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:09:37 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	get_that_map(char *map_path, t_parsemap **map)
 	(*map)->map_main = (char **)malloc(sizeof(char *) * ((*map)->y_count + 1));
 	(*map)->map_copy = (char **)malloc(sizeof(char *) * ((*map)->y_count + 1));
 	if (!(*map)->map_copy || !(*map)->map_main)
-		(free(*map), exit_nicely("failed malloc for map copies", 1));
+		exit_nicely("failed malloc for map copies", 1, map);
 	i = 0;
 	fd = open(map_path, O_RDONLY);
 	line = get_next_line(fd);
@@ -32,7 +32,7 @@ void	get_that_map(char *map_path, t_parsemap **map)
 		(*map)->map_main[i] = ft_strdup(line);
 		(*map)->map_copy[i] = ft_strdup(line);
 		if (!(*map)->map_main[i] || !(*map)->map_copy[i])
-			(free(*map), exit_nicely("failed line malloc for map copies", 1));
+			exit_nicely("failed line malloc for map copies", 1, map);
 		line = get_next_line(fd);
 		i++;
 	}
@@ -50,7 +50,7 @@ void	check_them_borders(t_parsemap **map)
 			(*map)->map_copy[0][i] != '\n')
 	{
 		if ((*map)->map_copy[0][i] != WALL)
-			(free(*map), exit_nicely("Map should be bordered by walls (1)", 1));
+			exit_nicely("Map should be bordered by walls (1)", 1, map);
 		i++;
 	}
 	i = 0;
@@ -58,7 +58,7 @@ void	check_them_borders(t_parsemap **map)
 			(*map)->map_copy[(*map)->y_count - 1][i] != '\0')
 	{
 		if ((*map)->map_copy[0][i] != WALL)
-			(free(*map), exit_nicely("Map should be bordered by walls (1)", 1));
+			exit_nicely("Map should be bordered by walls (1)", 1, map);
 		i++;
 	}
 	i = (*map)->y_count - 1;
@@ -66,7 +66,7 @@ void	check_them_borders(t_parsemap **map)
 	{
 		if ((*map)->map_copy[i][0] != WALL
 			|| (*map)->map_copy[i][(*map)->x_count - 1] != WALL)
-			(free(*map), exit_nicely("Map should be bordered by walls (1)", 1));
+			exit_nicely("Map should be bordered by walls (1)", 1, map);
 	}
 }
 
@@ -90,10 +90,10 @@ void	do_images_exist(void)
 	{
 		fd = open(images[i], O_RDONLY);
 		if (fd == -1)
-			exit_nicely("texture path doesnt exist", 1);
+			exit_nicely("texture path doesnt exist", 1, NULL);
 		rd = read(fd, idk, 1);
 		if (rd == -1)
-			(close(fd), exit_nicely("texture path doesnt exist", 1));
+			(close(fd), exit_nicely("texture path doesnt exist", 1, NULL));
 		i++;
 	}
 }

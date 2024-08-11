@@ -14,14 +14,14 @@ CFLAGS+= -DSTRINGPUTX11
 all: $(NOM)
 
 $(NOM):	$(OBJ)
-	@ar -r $(NOM) $(OBJ)
-	@ranlib $(NOM)
+	ar -r $(NOM) $(OBJ)
+	ranlib $(NOM)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 %.o: %.m
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(NOM) $(OBJ) *~

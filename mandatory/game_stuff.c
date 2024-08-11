@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 00:32:52 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 10:02:53 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:05:49 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void	move_pls(int new_x, int new_y, t_game *game)
 			game->map->collectibles <= 0)
 		game_over(game, 1);
 	if (game->map->map_main[new_y][new_x] == COLLECTIBLES)
+	{
 		game->map->collectibles -= 1;
+		game->map->map_main[new_y][new_x] = '0';
+	}
 	mlx_put_image_to_window(game->mlx, game->window,
 		game->tiles[0], game->map->player_x * game->tile_size,
 		game->map->player_y * game->tile_size);
@@ -57,15 +60,12 @@ int	game_over(t_game *game, int WorL)
 	int	i;
 
 	i = 0;
-	while (game->map->map_main[i] != NULL)
-		free(game->map->map_main[i++]);
-	free(game->map->map_main);
 	free_them_sprites(game);
 	mlx_destroy_window(game->mlx, game->window);
 	if (WorL == 1)
-		exit_nicely("You WIN!!!!", 0);
+		exit_nicely("!!!!YOU WIN!!!!", 0, &game->map);
 	else
-		exit_nicely("Game closed", 0);
+		exit_nicely("Game closed", 0, &game->map);
 	return (0);
 }
 
@@ -77,6 +77,3 @@ void	free_them_sprites(t_game	*game)
 	mlx_destroy_image(game->mlx, game->tiles[1]);
 	mlx_destroy_image(game->mlx, game->player[0]);
 }
-
-// mlx_put_image_to_window(game->mlx, game->window, 
-// 				game->tiles[1], x * game->tile_size, y * game->tile_size);

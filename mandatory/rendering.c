@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 22:34:33 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 10:11:26 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/11 13:32:01 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	initialize_those_pics(t_game *game)
 {
 	game->tile_size = TILE_SIZE;
 	game->collectible[0] = mlx_xpm_file_to_image(game->mlx,
-			"mandatory/textures/collectible.xpm", &game->tile_size,
+			"mandatory/textures/collectible.xpm", (&game->tile_size -8),
 			&game->tile_size);
 	game->player[0] = mlx_xpm_file_to_image(game->mlx,
 			"mandatory/textures/player.xpm", &game->tile_size,
