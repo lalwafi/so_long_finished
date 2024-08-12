@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:50:53 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 18:06:55 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/12 15:03:37 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ void	parse_that_map(char *map_path, t_game *game)
 	validate_that_path(map_path, &game->map);
 	count_y(map_path, &game->map);
 	count_x(map_path, &game->map, 0);
+	if (game->map->x_count > 40 || game->map->y_count > 22 || \
+		game->map->x_count < 3 || game->map->y_count < 3)
+		exit_nicely("map size is invalid!!", 1, &game->map);
 	get_that_map(map_path, &game->map);
-	if (game->map->x_count > 40 || game->map->y_count > 22)
-		exit_nicely("map is too big!! pls fix thanks", 1, &game->map);
 	check_them_borders(&game->map);
 	check_elements(&game->map, 0, 0);
 	check_epc(&game->map);

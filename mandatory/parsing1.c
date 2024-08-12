@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:54:24 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 15:48:18 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/12 15:22:04 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,27 @@ void	validate_that_path(char *map_path, t_parsemap **map)
 	int	fd;
 
 	if (!map_path)
-		exit_nicely("idk what issue this is", 1, map);
-	if (ft_strncmp(&map_path[ft_strlen(map_path) - 4], ".ber", 4) != 0)
-		exit_nicely("needs to be .ber", 1, map);
+		exit_nicely("wrong map path", 1, map);
+	if (ft_strncmp(&map_path[ft_strlen(map_path) - 4], ".ber", 4) != 0 \
+		|| ft_strlen(map_path) < 10)
+		exit_nicely("needs to be <name>.ber", 1, map);
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
 		exit_nicely("cant open map, doesnt exist?", 1, map);
+	ft_printf("map path = %s\nlen = %d\n", map_path, ft_strlen(map_path));
 }
 
 void	count_y(char *map_path, t_parsemap **map)
 {
 	int		fd;
 	char	*line;
-	int		i;
 
 	fd = open(map_path, O_RDONLY);
 	line = get_next_line(fd);
-	i = 0;
+	if (!line)
+		exit_nicely("map is empty :(", 1, map);
 	while (line)
 	{
-		i++;
 		if (line[0] == '\n')
 			(*map)->empty_line = 1;
 		if (line[0] != '\n' && (*map)->empty_line == 1)
@@ -46,12 +47,10 @@ void	count_y(char *map_path, t_parsemap **map)
 		}
 		if (line[0] != '\n' && (*map)->empty_line != 1)
 			(*map)->y_count += 1;
-		i = 0;
 		free(line);
 		line = get_next_line(fd);
 	}
-	close(fd);
-	free(line);
+	(close(fd), free(line));
 }
 
 void	count_x(char *map_path, t_parsemap **map, int i)

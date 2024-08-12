@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:56:07 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 17:09:37 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/12 15:10:26 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	check_them_borders(t_parsemap **map)
 	while ((*map)->map_copy[(*map)->y_count - 1][i] != '\n' &&
 			(*map)->map_copy[(*map)->y_count - 1][i] != '\0')
 	{
-		if ((*map)->map_copy[0][i] != WALL)
+		if ((*map)->map_copy[(*map)->y_count - 1][i] != WALL)
 			exit_nicely("Map should be bordered by walls (1)", 1, map);
 		i++;
 	}
