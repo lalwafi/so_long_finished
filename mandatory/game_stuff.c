@@ -6,13 +6,12 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 00:32:52 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 18:05:49 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/12 15:43:04 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// why int????
 int	hanlde_them_keys(int what_key, t_game *game)
 {
 	if (what_key == ESC)

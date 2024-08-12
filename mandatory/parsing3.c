@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:56:30 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/11 15:49:08 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/12 15:43:09 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,3 @@ void	pathfinder_time(t_parsemap **map, int x, int y, char **map_copy)
 	pathfinder_time(map, x, (y + 1), map_copy);
 	pathfinder_time(map, x, (y - 1), map_copy);
 }
-
-// FIX THE EXIT_NICELYS
