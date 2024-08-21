@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:56:30 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/12 15:43:09 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/14 19:10:02 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,14 @@ void	pathfinder_time(t_parsemap **map, int x, int y, char **map_copy)
 	if (map_copy[y][x] == WALL || (*map)->x_count < x ||
 		(*map)->y_count < y || x < 0 || y < 0)
 		return ;
+	if (map_copy[y][x] == EXIT)
+	{
+		(*map)->temp_exit -= 1;
+		map_copy[y][x] = WALL;
+		return ; 
+	}
 	if (map_copy[y][x] == COLLECTIBLES)
 		(*map)->temp_collectibles -= 1;
-	if (map_copy[y][x] == EXIT)
-		(*map)->temp_exit -= 1;
 	map_copy[y][x] = WALL;
 	pathfinder_time(map, (x + 1), y, map_copy);
 	pathfinder_time(map, (x - 1), y, map_copy);
