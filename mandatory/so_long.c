@@ -6,7 +6,7 @@
 /*   By: lalwafi <lalwafi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:50:53 by lalwafi           #+#    #+#             */
-/*   Updated: 2024/08/12 15:03:37 by lalwafi          ###   ########.fr       */
+/*   Updated: 2024/08/23 07:57:17 by lalwafi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,10 @@ int	main(int ac, char **av)
 	t_game	game;
 
 	if (ac != 2)
-		exit_nicely("Arguments ain't right, should be \
-		'./so_long maps/map<insert number>.ber'", 1, NULL);
+	{
+		write(1, "Arguments ain't right, should be './so_long maps/map<insert number>.ber'\n", 73);
+		exit(EXIT_FAILURE);
+	}
 	do_images_exist();
 	game.map = malloc(sizeof(t_parsemap));
 	parse_that_map(av[1], &game);
